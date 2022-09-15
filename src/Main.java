@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,16 +31,17 @@ public class Main {
     public static Map<Character, Integer> fillingMap(Map<Character, Integer> map, String text) {
         char[] chars = text.toCharArray();
         for (char c : chars) {
-            if ((Character.isLetter(c)) && !(Character.isSpaceChar(c))) {
-                c = Character.toLowerCase(c);
-                if (!map.containsKey(c)) {
-                    Integer value = 1;
-                    map.put(c, value);
-                } else {
-                    int value2 = map.get(c);
-                    value2++;
-                    map.put(c, value2);
-                }
+            if (!(Character.isLetter(c)) || Character.isWhitespace(c)) {
+                continue;
+            }
+            c = Character.toLowerCase(c);
+            if (!map.containsKey(c)) {
+                Integer value = 1;
+                map.put(c, value);
+            } else {
+                int value2 = map.get(c);
+                value2++;
+                map.put(c, value2);
             }
         }
         return map;
@@ -51,8 +53,9 @@ public class Main {
      * @param map
      */
     public static void findMinAndMax(Map<Character, Integer> map) {
-        int minValue = Collections.min(map.values());
-        int maxValue = Collections.max(map.values());
+        Collection<Integer> value = map.values();
+        int minValue = Collections.min(value);
+        int maxValue = Collections.max(value);
         System.out.println("minimal value in map: " + minValue);
         System.out.println("maximum value in map: " + maxValue);
     }
